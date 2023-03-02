@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CS-ProjectApp": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "MongoConnString": "mongodb://localhost:27017"
+      }
+    }
+  }
+}
