@@ -10,7 +10,7 @@ Welcome to your new app.
 
 <AuthorizeView>
     <Authorized>
-        @context.User.Claims.FirstOrDefault( cl => cl.Type.ToString()=="emals").Value
+        @context.User.Claims.FirstOrDefault( cl => cl.Type.ToString()=="emails").Value
         <a href="MicrosoftIdentity/Account/SignOut">Log out</a>
     </Authorized>
     <NotAuthorized>

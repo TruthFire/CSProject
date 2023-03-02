@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CS_ProjectApp.Models
 {
-    internal class EventSchema
+    public class EventSchema
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

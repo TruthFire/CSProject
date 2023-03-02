@@ -29,7 +29,7 @@ namespace CS_ProjectApp.DAL
 
         public async Task<List<EventSchema>> GetNEvents(int lim)
         {
-            return _events.Find(x => true).Limit(lim).ToList();
+            return _events.Find(x => x.eventStart > DateTime.Now).Limit(lim).ToList();
 
         }
 
@@ -42,8 +42,7 @@ namespace CS_ProjectApp.DAL
         {
             var filter = Builders<EventSchema>.Filter.Eq("eventId", eventData.eventId);
 
-            return _events.ReplaceOneAsync(filter, eventData);
-            throw new NotImplementedException();
+            return _events.ReplaceOneAsync(filter, eventData, new ReplaceOptions { IsUpsert = true });
         }
     }
 }
