@@ -14,5 +14,6 @@ namespace CS_ProjectApp.DAL
         MongoClient Client { get; }
         string DbName { get; }
         IMongoCollection<TicketSchema> TicketCollection{ get; }
+        IMongoCollection<UserSchema> UserCollection { get; }
     }
 }

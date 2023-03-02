@@ -25,6 +25,20 @@ namespace CS_ProjectApp.Models
         {
             eventId = ObjectId.GenerateNewId().ToString();
         }
+
+        public EventSchema (CreateEventForm cf)
+        {
+            eventId = ObjectId.GenerateNewId().ToString();
+            eventName = cf.EventName;
+            description = cf.description;
+            type = cf.type;
+            eventStart = cf.eventStart;
+            location = cf.location;
+            ticketPrice = cf.ticketPrice;
+            availableTickets = cf.availableTickets;
+            image = cf.image;
+            organizer = cf.organizer;
+        }
         
 
     }

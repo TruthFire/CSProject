@@ -13,15 +13,17 @@ namespace CS_ProjectApp.DAL
         public string DbName { get; private set; }
         public string EventsCollectionName { get; private set; } = "events";
         public string TicketCollectionName { get; private set; } = "tickets";
+        public string UserCollectionName { get; private set; } = "users";
 
         public MongoClient Client { get; private set; }
 
         public IMongoCollection<EventSchema> EventCollection { get; private set; }
         public IMongoCollection<TicketSchema> TicketCollection { get; private set; }
+        public IMongoCollection<UserSchema> UserCollection { get; private set; }
 
         public DbConnection()
         {
-            Client = new MongoClient(Environment.GetEnvironmentVariable("MongoConnString"));
+            Client = new MongoClient("mongodb://localhost:27017");
             DbName = "TicketShop";
             _db = Client.GetDatabase(DbName);
             
@@ -29,6 +31,7 @@ namespace CS_ProjectApp.DAL
             //Collections initialization
             EventCollection = _db.GetCollection<EventSchema>(EventsCollectionName);
             TicketCollection = _db.GetCollection<TicketSchema>(TicketCollectionName);
+            UserCollection = _db.GetCollection<UserSchema>(UserCollectionName);
         }
 
     }

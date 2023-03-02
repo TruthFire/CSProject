@@ -1,0 +1,80 @@
+﻿@using System.ComponentModel.DataAnnotations;
+@using CS_ProjectApp.Models;
+@attribute [Authorize]
+@inject IEventData EventData;
+
+<EditForm Model="@eventmodel" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <MudGrid>
+        <MudItem xs="12" sm="7">
+            <MudCard>
+                
+                <MudCardContent>
+                    <MudTextField Label="Event name" 
+                                  @bind-Value="eventmodel.EventName" For="@(() => eventmodel.EventName)" />
+                    <MudTextField Label="Event location"
+                                  @bind-Value="eventmodel.location" For="@(() => eventmodel.location)" />
+                    <MudTextField Label="Event description" Class="mt-3"
+                                  @bind-Value="eventmodel.description" For="@(() => eventmodel.description)" Lines="6"/>
+                    <MudSelect @bind-Value="eventmodel.type" Label="Select event type" HelperText="String" Placeholder="Please Select">
+                        <MudSelectItem Value="@("Comedy")" >Comedy</MudSelectItem>
+                        <MudSelectItem Value="@("Music")">Music</MudSelectItem>
+                        <MudSelectItem Value="@("Theatre")">Theatre</MudSelectItem>
+                        <MudSelectItem Value="@("Orchestra")">Orchestra</MudSelectItem>
+                        <MudSelectItem Value="@("Sports")">Sports</MudSelectItem>
+                    </MudSelect>
+                    <MudTextField Label="Event Date & Time" @bind-value="eventmodel.eventStart"T="DateTime" Format="yyyy-MM-dd" InputType="InputType.DateTimeLocal"/>
+                    <MudTextField @bind-Value="eventmodel.ticketPrice" Label="Ticket price"t Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    <MudNumericField @bind-Value="eventmodel.ticketPrice" Label="Ticket price" Variant="Variant.Text" Min="0" Max="300" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    <MudNumericField @bind-Value="eventmodel.availableTickets" Label="Ticket amount" Variant="Variant.Text" Min="0" Max="1000" Step="10" />
+                    <MudSpacer/>
+                    <MudTextField Label="Event image"
+                                  @bind-Value="eventmodel.image" For="@(() => eventmodel.image)" />
+                    <MudTextField Label="Organizer"
+                                  @bind-Value="eventmodel.organizer" For="@(() => eventmodel.organizer)" />
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Register</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="5">
+            <MudPaper Class="pa-4 mud-height-full">
+                <MudText Typo="Typo.subtitle2">Validation Summary</MudText>
+                @if (success)
+                {
+                    <MudText Color="Color.Success">Success</MudText>
+                }
+                else
+                {
+                    <MudText Color="@Color.Error">
+                        <ValidationSummary />
+                    </MudText>
+                }
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12">
+            <MudText Typo="Typo.body2" Align="Align.Center">
+                Fill out the form correctly to see the success message.
+            </MudText>
+        </MudItem>
+    </MudGrid>
+</EditForm>
+
+
+@code {
+    CreateEventForm eventmodel = new ();
+    bool success = false;
+
+
+
+    private void OnValidSubmit(EditContext context)
+    {
+        success = true;
+        StateHasChanged();
+        EventData.CreateEvent(new EventSchema(eventmodel));
+    }
+
+    
+
+}

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS-ProjectApp", "CS-ProjectApp\CS-ProjectApp.csproj", "{A5011096-70D3-427E-A327-09C535D08EC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CS-ProjectApp", "CS-ProjectApp\CS-ProjectApp.csproj", "{A5011096-70D3-427E-A327-09C535D08EC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSProjectUI", "CSProjectUI\CSProjectUI.csproj", "{A5827182-3BFB-4B58-8FD0-A0C2B24F3002}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSProjectUI", "CSProjectUI\CSProjectUI.csproj", "{A5827182-3BFB-4B58-8FD0-A0C2B24F3002}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

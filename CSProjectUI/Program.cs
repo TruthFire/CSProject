@@ -29,6 +29,10 @@ builder.Services.AddServerSideBlazor()
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddMudServices();
 
+builder.Services.AddSingleton<IDbConnection, DbConnection>();
+builder.Services.AddSingleton<ITicket, MongoTicket>();
+builder.Services.AddSingleton<IEventData, MongoEventData>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
