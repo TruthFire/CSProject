@@ -1,0 +1,38 @@
+﻿@using System.ComponentModel.DataAnnotations;
+@using CS_ProjectApp.Models;
+@attribute [Authorize]
+@inject IEventData EventData;
+
+<MudGrid Spacing="3">
+    @foreach(var ev in _events)
+    {
+            <MudItem xs="12" sm="4">
+                <MudCard>
+                    <MudCardMedia Image="@ev.image" Height="200" Width="400" />
+                    <MudCardContent>
+                        <MudText Typo="Typo.h5">@ev.eventName</MudText>
+                        <MudText Typo="Typo.body2">@ev.location</MudText>
+                        <MudText Typo="Typo.body2">@ev.eventStart</MudText>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudLink Href="#"><MudButton Variant="Variant.Text" Color="Color.Primary">Buy ticket...</MudButton></MudLink>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+    }
+
+</MudGrid>
+
+
+@code {
+    List<EventSchema> _events;
+    bool success = false;
+
+    protected override async void OnInitialized() 
+    {
+        _events = await EventData.GetNEvents(20);
+    }
+
+
+
+}

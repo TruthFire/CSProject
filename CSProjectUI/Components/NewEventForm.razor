@@ -7,8 +7,7 @@
     <DataAnnotationsValidator />
     <MudGrid>
         <MudItem xs="12" sm="7">
-            <MudCard>
-                
+            <MudCard>                
                 <MudCardContent>
                     <MudTextField Label="Event name" 
                                   @bind-Value="eventmodel.EventName" For="@(() => eventmodel.EventName)" />
@@ -16,6 +15,7 @@
                                   @bind-Value="eventmodel.location" For="@(() => eventmodel.location)" />
                     <MudTextField Label="Event description" Class="mt-3"
                                   @bind-Value="eventmodel.description" For="@(() => eventmodel.description)" Lines="6"/>
+                    <MudSpacer />
                     <MudSelect @bind-Value="eventmodel.type" Label="Select event type" HelperText="String" Placeholder="Please Select">
                         <MudSelectItem Value="@("Comedy")" >Comedy</MudSelectItem>
                         <MudSelectItem Value="@("Music")">Music</MudSelectItem>
@@ -23,8 +23,8 @@
                         <MudSelectItem Value="@("Orchestra")">Orchestra</MudSelectItem>
                         <MudSelectItem Value="@("Sports")">Sports</MudSelectItem>
                     </MudSelect>
-                    <MudTextField Label="Event Date & Time" @bind-value="eventmodel.eventStart"T="DateTime" Format="yyyy-MM-dd" InputType="InputType.DateTimeLocal"/>
-                    <MudTextField @bind-Value="eventmodel.ticketPrice" Label="Ticket price"t Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    <MudSpacer />
+                    <MudTextField T="DateTime" Format="s" Label="DateTimeLocal" @bind-Value="eventmodel.eventStart" InputType="InputType.DateTimeLocal" />
                     <MudNumericField @bind-Value="eventmodel.ticketPrice" Label="Ticket price" Variant="Variant.Text" Min="0" Max="300" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
                     <MudNumericField @bind-Value="eventmodel.availableTickets" Label="Ticket amount" Variant="Variant.Text" Min="0" Max="1000" Step="10" />
                     <MudSpacer/>
@@ -72,6 +72,8 @@
     {
         success = true;
         StateHasChanged();
+        
+        
         EventData.CreateEvent(new EventSchema(eventmodel));
     }
 

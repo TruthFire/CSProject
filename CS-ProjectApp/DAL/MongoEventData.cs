@@ -29,7 +29,7 @@ namespace CS_ProjectApp.DAL
 
         public async Task<List<EventSchema>> GetNEvents(int lim)
         {
-            return _events.Find(x => x.eventStart > DateTime.Now).Limit(lim).ToList();
+            return _events.Find(x => true).Limit(lim).ToList();
 
         }
 
