@@ -4,24 +4,32 @@
 @page "/event/{eventId}"
 
 <MudGrid>
-    <MudItem sm="8" xs="12">
+    <MudItem sm="12" Class="justify-center">
+        <MudPaper>
         <MudGrid>
+            
             <MudItem sm="4" xs="12">
-                <MudCardMedia Image="@currentEvent.image" Height="300" />
+                <MudCardMedia Image="@currentEvent.image" Class="ml-2" Height="400" />
             </MudItem>
             <MudItem sm="8" xs="12">
-                <MudCard>
+                
                     <MudCardContent>
                         <MudText Typo="Typo.h2">@currentEvent.eventName </MudText>
-                        <MudText Typo="Typo.body2" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.LocationOn">@currentEvent.description</MudText>
-
+                        <MudText Typo="Typo.body2" Class="mb-8">@currentEvent.description</MudText>
+                        <MudText Typo="Typo.body2" Class="d-flex align-center mb-2"><MudIcon Icon="@Icons.Material.Filled.LocationOn" Title="Location" Class="mr-2" />@currentEvent.location</MudText>
+                        <MudText Typo="Typo.body2" Class="d-flex align-center mb-2"><MudIcon Icon="@Icons.Material.Filled.CalendarToday" Class="mr-2" Title="Time" />@currentEvent.eventStart</MudText>
+                        <MudText Typo="Typo.body2" Class="d-flex align-center mb-2"><MudIcon Icon="@Icons.Material.Filled.Euro" Class="mr-2" Title="Ticket price" />@currentEvent.ticketPrice</MudText>
+                        <MudText Typo="Typo.body2" Class="d-flex align-center mb-2"><b>Tickets left:</b> @currentEvent.availableTickets</MudText>
                     </MudCardContent>
+                    
                     <MudCardActions>
                         <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
                     </MudCardActions>
-                </MudCard>
+            
             </MudItem>
+            
         </MudGrid>
+        </MudPaper>
     </MudItem>
 
 </MudGrid>
