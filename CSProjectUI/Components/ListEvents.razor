@@ -13,9 +13,10 @@
                         <MudText Typo="Typo.h5">@ev.eventName</MudText>
                         <MudText Typo="Typo.body2">@ev.location</MudText>
                         <MudText Typo="Typo.body2">@ev.eventStart</MudText>
+
                     </MudCardContent>
                     <MudCardActions>
-                        <MudLink Href="#"><MudButton Variant="Variant.Text" Color="Color.Primary">Buy ticket...</MudButton></MudLink>
+                    <MudLink Href="@($"event/{ev._id}")">More..</MudLink>
                     </MudCardActions>
                 </MudCard>
             </MudItem>

@@ -1,0 +1,43 @@
+﻿@using CS_ProjectApp.Models;
+@inject IEventData EventData;
+
+@page "/event/{eventId}"
+
+<MudGrid>
+    <MudItem sm="8" xs="12">
+        <MudGrid>
+            <MudItem sm="4" xs="12">
+                <MudCardMedia Image="@currentEvent.image" Height="300" />
+            </MudItem>
+            <MudItem sm="8" xs="12">
+                <MudCard>
+                    <MudCardContent>
+                        <MudText Typo="Typo.h2">@currentEvent.eventName </MudText>
+                        <MudText Typo="Typo.body2" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.LocationOn">@currentEvent.description</MudText>
+
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+
+</MudGrid>
+
+@code {
+    [Parameter]
+    public string eventId { get; set; }
+
+    EventSchema currentEvent;
+
+    protected override async void OnInitialized()
+    {
+        currentEvent = EventData.GetEventById(eventId).Result;
+    }
+
+
+
+
+}

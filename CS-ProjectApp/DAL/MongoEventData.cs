@@ -21,7 +21,7 @@ namespace CS_ProjectApp.DAL
 
         public async Task<bool> DeleteEventAsync(string id)
         {
-            var deletefilter = Builders<EventSchema>.Filter.Where(e => e.eventId == id);
+            var deletefilter = Builders<EventSchema>.Filter.Where(e => e._id == id);
             var deletionResult = await _events.DeleteOneAsync(deletefilter);
 
             return await Task.FromResult(deletionResult.DeletedCount == 1);
@@ -34,13 +34,17 @@ namespace CS_ProjectApp.DAL
         }
 
         public async Task<EventSchema> GetEventById(string id)
-        { 
-            return (EventSchema)_events.Find(x => x.eventId == id).Limit(1);
+        {
+
+            var filter = Builders<EventSchema>.Filter.Eq("_id", id);
+
+
+            return (EventSchema)_events.Find(filter).Limit(1).ToList().ElementAt(0);
         }
 
         public Task UpdateEvent(EventSchema eventData)
         {
-            var filter = Builders<EventSchema>.Filter.Eq("eventId", eventData.eventId);
+            var filter = Builders<EventSchema>.Filter.Eq("eventId", eventData._id);
 
             return _events.ReplaceOneAsync(filter, eventData, new ReplaceOptions { IsUpsert = true });
         }

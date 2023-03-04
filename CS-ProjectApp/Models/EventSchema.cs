@@ -10,7 +10,7 @@ namespace CS_ProjectApp.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string eventId { get; set; }
+        public string _id { get; set; }
         public string eventName { get; set; }
         public string description { get; set; }
         public string type { get; set; }
@@ -23,12 +23,12 @@ namespace CS_ProjectApp.Models
 
         public EventSchema()
         {
-            eventId = ObjectId.GenerateNewId().ToString();
+            _id = ObjectId.GenerateNewId().ToString();
         }
 
         public EventSchema (CreateEventForm cf)
         {
-            eventId = ObjectId.GenerateNewId().ToString();
+            _id = ObjectId.GenerateNewId().ToString();
             eventName = cf.EventName;
             description = cf.description;
             type = cf.type;
