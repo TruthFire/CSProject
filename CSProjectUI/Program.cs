@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using MudBlazor.Services;
@@ -23,6 +24,8 @@ builder.Services.AddAuthorization(options =>
     options.FallbackPolicy = options.DefaultPolicy;
 });
 
+
+
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor()
     .AddMicrosoftIdentityConsentHandler();
@@ -33,8 +36,11 @@ builder.Services.AddSingleton<IDbConnection, DbConnection>();
 builder.Services.AddSingleton<ITicket, MongoTicket>();
 builder.Services.AddSingleton<IEventData, MongoEventData>();
 builder.Services.AddSingleton<IOrder, MongoOrder>();
-
 var app = builder.Build();
+
+
+var logger = app.Services.GetRequiredService<ILoggerFactory>()
+    .CreateLogger<Program>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

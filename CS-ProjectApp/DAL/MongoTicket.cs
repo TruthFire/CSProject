@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,9 +32,12 @@ namespace CS_ProjectApp.DAL
             return await Task.FromResult(deletionResult.DeletedCount == 1);
         }
 
-        public Task<TicketSchema> GetTicketById(string id)
+        public async Task<TicketSchema> GetTicketById(string id)
         {
-            return (Task<TicketSchema>)_tickets.Find(x => x.ticketId== id).Limit(1);
+            var filter = Builders<TicketSchema>.Filter.Eq(t => t.ticketId, id);
+            var result = _tickets.Find(filter).FirstOrDefault();
+            return result;
+
         }
 
         public Task UpdateTicket(TicketSchema ticket)
