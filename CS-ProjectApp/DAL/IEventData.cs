@@ -13,5 +13,6 @@ namespace CS_ProjectApp.DAL
         Task<List<EventSchema>> GetNEvents(int n);
         Task<bool> DeleteEventAsync (string id);
         Task UpdateEvent(EventSchema eventData);
+        Task DecreaseTickets(string eventId, int amount);
     }
 }

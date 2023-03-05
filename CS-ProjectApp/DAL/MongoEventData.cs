@@ -48,5 +48,13 @@ namespace CS_ProjectApp.DAL
 
             return _events.ReplaceOneAsync(filter, eventData, new ReplaceOptions { IsUpsert = true });
         }
+
+        public async Task DecreaseTickets(string eventId, int amount)
+        {
+            var filter = Builders<EventSchema>.Filter.Eq("eventId", eventId);
+            var update = Builders<EventSchema>.Update.Inc("availableTickets", amount * -1);
+
+            _events.FindOneAndUpdate(filter, update);
+        }
     }
 }

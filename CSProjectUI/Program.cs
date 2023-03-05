@@ -32,6 +32,7 @@ builder.Services.AddMudServices();
 builder.Services.AddSingleton<IDbConnection, DbConnection>();
 builder.Services.AddSingleton<ITicket, MongoTicket>();
 builder.Services.AddSingleton<IEventData, MongoEventData>();
+builder.Services.AddSingleton<IOrder, MongoOrder>();
 
 var app = builder.Build();
 

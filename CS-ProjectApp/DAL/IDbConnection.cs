@@ -15,5 +15,6 @@ namespace CS_ProjectApp.DAL
         string DbName { get; }
         IMongoCollection<TicketSchema> TicketCollection{ get; }
         IMongoCollection<UserSchema> UserCollection { get; }
+        IMongoCollection<OrderSchema> OrderCollection { get; }
     }
 }

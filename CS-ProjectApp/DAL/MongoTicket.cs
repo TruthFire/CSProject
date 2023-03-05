@@ -11,9 +11,16 @@ namespace CS_ProjectApp.DAL
 
         private readonly IMongoCollection<TicketSchema> _tickets;
 
+
         public Task CreateTicket(TicketSchema ticket)
         {
             return _tickets.InsertOneAsync(ticket);
+
+        }
+
+        public Task CreateTickets(List<TicketSchema> tickets)
+        {
+            return _tickets.InsertManyAsync(tickets);
         }
 
         public async Task<bool> DeleteTicketAsync(string id)

@@ -14,12 +14,14 @@ namespace CS_ProjectApp.DAL
         public string EventsCollectionName { get; private set; } = "events";
         public string TicketCollectionName { get; private set; } = "tickets";
         public string UserCollectionName { get; private set; } = "users";
+        public string OrderCollectionName { get; private set; } = "orders";
 
         public MongoClient Client { get; private set; }
 
         public IMongoCollection<EventSchema> EventCollection { get; private set; }
         public IMongoCollection<TicketSchema> TicketCollection { get; private set; }
         public IMongoCollection<UserSchema> UserCollection { get; private set; }
+        public IMongoCollection<OrderSchema> OrderCollection { get; private set; }
 
         public DbConnection()
         {
@@ -32,6 +34,8 @@ namespace CS_ProjectApp.DAL
             EventCollection = _db.GetCollection<EventSchema>(EventsCollectionName);
             TicketCollection = _db.GetCollection<TicketSchema>(TicketCollectionName);
             UserCollection = _db.GetCollection<UserSchema>(UserCollectionName);
+            OrderCollection = _db.GetCollection<OrderSchema>(OrderCollectionName);
+
         }
 
     }

@@ -1,0 +1,119 @@
+﻿@using CS_ProjectApp.Models;
+@inject IEventData EventData;
+@inject IOrder MongoOrder;
+@inject ITicket MongoTicket;
+
+@page "/event/{eventId}/order"
+
+<MudPaper>
+    <MudGrid>
+        <MudItem xs="12" sm="3">
+            <MudImage  Src="@currentEvent.image"  Height="285" Alt="Event poster" Elevation="25" Class="rounded-lg ml-4"/>
+         </MudItem>
+         <MudItem xs="12" sm="9">
+             <MudText Typo="Typo.h2">@currentEvent.eventName </MudText>
+             <MudText Typo="Typo.body2" Class="d-flex align-center mb-2"><MudIcon Icon="@Icons.Material.Filled.LocationOn" Title="Location" Class="mr-2" />@currentEvent.location</MudText>
+                       <MudText Typo="Typo.body2" Class="d-flex align-center mb-2"><MudIcon Icon="@Icons.Material.Filled.CalendarToday" Class="mr-2" Title="Time" />@currentEvent.eventStart</MudText>
+                        <MudText Typo="Typo.body2" Class="d-flex align-center mb-2"><MudIcon Icon="@Icons.Material.Filled.Euro" Class="mr-2" Title="Ticket price" />@currentEvent.ticketPrice</MudText>
+                        <MudText Typo="Typo.body2" Class="d-flex align-center mb-2"><b>Tickets left:</b> @currentEvent.availableTickets</MudText>
+         </MudItem>
+    </MudGrid>
+</MudPaper>
+
+
+<EditForm Model="@order" class="mt-10" OnSubmit="OnSubmit">
+    <MudGrid>
+        <MudItem xs="12" sm="7">
+            <MudCard>
+                <MudCardContent>
+                    <MudTextField Label="Your email" 
+                                  @bind-Value="order.orderedBy" For="@(() => order.orderedBy)" />
+
+                    <MudNumericField HideSpinButtons="true" @bind-Value="ticketAmount" Label="Ticket amount" Class="mt-5" Variant="Variant.Text" Min="1" Max="10" />
+                    
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Create order</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="5">
+            <MudPaper Class="pa-4 mud-height-full">
+                <MudText Typo="Typo.subtitle2">Validation Summary</MudText>
+                @if (success)
+                {
+                        <MudText Color="Color.Success">Success</MudText>
+                }
+                else
+                {
+                        <MudText Color="@Color.Error">
+                            <ValidationSummary />
+                        </MudText>
+                }
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12">
+            <MudText Typo="Typo.body2" Align="Align.Center">
+                Fill out the form correctly to see the success message.
+            </MudText>
+        </MudItem>
+    </MudGrid>
+</EditForm>
+
+
+@code {
+    [Parameter]
+    public string eventId { get; set; }
+
+    EventSchema currentEvent;
+    OrderSchema order = new();
+    int ticketAmount =1 ; 
+
+    protected override async void OnInitialized()
+    {
+        currentEvent = EventData.GetEventById(eventId).Result;
+    }
+
+    bool success = false;
+
+
+
+    /* private void OnValidSubmit(EditContext context)
+    {
+        List<TicketSchema> tickets = new();
+        success = true;
+        StateHasChanged();
+        for(int i = 0; i < ticketAmount; i++ ) {
+            TicketSchema t = new();
+            t.setEventInfo(currentEvent);
+            tickets.Add(t);
+        }
+
+        MongoTicket.CreateTickets(tickets);
+
+        order.setEventInfo(currentEvent);
+        order.tickets = tickets;
+
+        MongoOrder.createOrder(order);
+    }*/
+
+    private void OnSubmit(EditContext context)
+    {
+        List<TicketSchema> tickets = new();
+        success = true;
+        StateHasChanged();
+        for (int i = 0; i < ticketAmount; i++)
+        {
+            TicketSchema t = new();
+            t.setEventInfo(currentEvent);
+            tickets.Add(t);
+            t.orderTime = DateTime.Now;
+        }
+
+        order.setEventInfo(currentEvent);
+        order.tickets = tickets;
+
+        MongoTicket.CreateTickets(tickets);
+        MongoOrder.createOrder(order);
+    }
+}
