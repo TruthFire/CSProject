@@ -79,14 +79,14 @@
 
 
     /* private void OnValidSubmit(EditContext context)
-    {
+        {
         List<TicketSchema> tickets = new();
         success = true;
         StateHasChanged();
         for(int i = 0; i < ticketAmount; i++ ) {
             TicketSchema t = new();
             t.setEventInfo(currentEvent);
-            tickets.Add(t);
+        tickets.Add(t);
         }
 
         MongoTicket.CreateTickets(tickets);
@@ -115,5 +115,7 @@
 
         MongoTicket.CreateTickets(tickets);
         MongoOrder.createOrder(order);
+
+        EventData.DecreaseTickets(eventId, ticketAmount);
     }
 }

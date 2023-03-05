@@ -51,10 +51,14 @@ namespace CS_ProjectApp.DAL
 
         public async Task DecreaseTickets(string eventId, int amount)
         {
-            var filter = Builders<EventSchema>.Filter.Eq("eventId", eventId);
-            var update = Builders<EventSchema>.Update.Inc("availableTickets", amount * -1);
+            var filter = Builders<EventSchema>.Filter.Eq("_id", eventId);
+            var update = Builders<EventSchema>.Update.Inc("availableTickets", amount *-1);
 
-            _events.FindOneAndUpdate(filter, update);
+            var tmp = _events.FindOneAndUpdateAsync(filter, update).Result;
+
+            Console.WriteLine(tmp);
+;
+         
         }
     }
 }
