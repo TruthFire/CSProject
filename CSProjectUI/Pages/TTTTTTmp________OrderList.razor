@@ -1,0 +1,35 @@
+﻿@using CS_ProjectApp.PDFGeneration;
+@using QuestPDF.Fluent;
+@inject ITicket MongoTicket;
+
+
+
+<h3>OrderList</h3>
+
+@ticket.ToString();
+
+@code {
+    [Parameter]
+    public string id { get; set; }
+
+
+    TicketSchema ticket;
+
+
+
+
+    
+
+    TicketInvoiceDocument document;
+
+
+    protected override async void OnInitialized()
+    {
+        string filePath = $"./wwwroot/tickets/invoice-{id}.pdf";
+        ticket = MongoTicket.GetTicketById(id).Result;
+        document = new TicketInvoiceDocument(ticket);
+        document.GeneratePdf(filePath);
+        File.Delete($"qrc-{ticket.ticketId}.png");
+        
+    }
+}

@@ -12,5 +12,6 @@ namespace CS_ProjectApp.DAL
         Task<OrderSchema> GetOrderById(string id);
         Task<bool> DeleteOrderAsync(string id);
         Task UpdateOrder(OrderSchema order);
+        Task<List<OrderSchema>> GetUserOrders(string email);
     }
 }

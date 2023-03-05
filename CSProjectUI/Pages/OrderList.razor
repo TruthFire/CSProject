@@ -1,35 +1,37 @@
-﻿@using CS_ProjectApp.PDFGeneration;
-@using QuestPDF.Fluent;
-@inject ITicket MongoTicket;
+﻿@inject IOrder MongoOrders;
+@inject AuthenticationStateProvider GetAuthenticationStateAsync
+<h3>Order List</h3>
 
-@page "/tickets/{id}"
+@page "/orders"
 
-<h3>OrderList</h3>
-
-@ticket.ToString();
+<MudTable Items="@userOrders.Take(4)" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>#</MudTh>
+        <MudTh>Event name</MudTh>
+        <MudTh>Order date</MudTh>
+        <MudTh>Tickets</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="#">@context.orderId</MudTd>
+        <MudTd DataLabel="Sign">@context.eventInfo.eventName</MudTd>
+        <MudTd DataLabel="Name">@context.eventInfo.eventStart</MudTd>
+        <MudTd DataLabel="Tickets">link</MudTd>
+    </RowTemplate>
+</MudTable>
 
 @code {
-    [Parameter]
-    public string id { get; set; }
 
 
-    TicketSchema ticket;
+    private IEnumerable<OrderSchema> userOrders = new List<OrderSchema>();
+    string email;
 
-
-
-
-    
-
-    TicketInvoiceDocument document;
-
-
-    protected override async void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        string filePath = $"./wwwroot/tickets/invoice-{id}.pdf";
-        ticket = MongoTicket.GetTicketById(id).Result;
-        document = new TicketInvoiceDocument(ticket);
-        document.GeneratePdf(filePath);
-        File.Delete($"qrc-{ticket.ticketId}.png");
-        
+        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+        var currentUserEmail = authstate.User.Claims.FirstOrDefault(cl => cl.Type.ToString() == "emails").Value;
+        userOrders = MongoOrders.GetUserOrders(currentUserEmail).Result;
+
     }
+
+
 }

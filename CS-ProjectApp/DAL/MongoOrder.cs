@@ -34,5 +34,12 @@ namespace CS_ProjectApp.DAL
         {
             throw new NotImplementedException();
         }
+
+        public async Task<List<OrderSchema>> GetUserOrders(string email) {
+            var filter = Builders<OrderSchema>.Filter.Eq(t => t.orderedBy, email);
+            return _orders.Find(filter).ToList();
+
+            
+        }
     }
 }
