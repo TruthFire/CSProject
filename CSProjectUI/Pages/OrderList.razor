@@ -18,16 +18,18 @@
 
 
 
-    string filePath = "invoice.pdf";
+    
 
     TicketInvoiceDocument document;
 
 
     protected override async void OnInitialized()
     {
+        string filePath = $"./wwwroot/tickets/invoice-{id}.pdf";
         ticket = MongoTicket.GetTicketById(id).Result;
         document = new TicketInvoiceDocument(ticket);
         document.GeneratePdf(filePath);
+        File.Delete($"qrc-{ticket.ticketId}.png");
         
     }
 }
